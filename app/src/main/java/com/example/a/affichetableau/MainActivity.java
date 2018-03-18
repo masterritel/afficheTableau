@@ -1,5 +1,8 @@
 package com.example.a.affichetableau;
 
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,34 +15,40 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 ListView l;
+private SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        l=(ListView)findViewById(R.id.lv) ;
-        ArrayList<HashMap<String,String>> values=new ArrayList<HashMap<String, String>>();
-        HashMap<String,String>map= new HashMap<String, String>();
+        l= findViewById(R.id.lv);
+        ArrayList<HashMap<String,String>> values=new ArrayList<>();
+        HashMap<String,String>map = new HashMap<>();
         map.put("id","1");
         map.put("NumTel","123");
         map.put("Text","Hi");
         map.put("Date","12/03/2018");
         values.add(map);
-        map=new HashMap<String, String>();
+        map=new HashMap<>();
         map.put("id","2");
         map.put("NumTel","456");
         map.put("Text","Hello");
         map.put("Date","15/03/2018");
         values.add(map);
-        SimpleAdapter adapter=new SimpleAdapter(MainActivity.this,values,R.layout.item,new String[]{"id","NumTel","Text","Date"},new int[]{R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4});
+
+        SimpleAdapter adapter = new SimpleAdapter(MainActivity.this,values, R.layout.item,new String[]{"id","NumTel","Text","Date"},new int[]{R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4});
         l.setAdapter(adapter);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,8 +56,6 @@ ListView l;
                         .setAction("Action", null).show();
             }
         });
-
-
     }
 
     @Override
